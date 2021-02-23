@@ -1,0 +1,62 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MaterialApp(
+    home: Informasi(),
+  ));
+}
+
+class Mahasiswa {
+  String namamhs;
+  String jkelamin;
+  String jurusan;
+
+  Mahasiswa({this.namamhs, this.jkelamin, this.jurusan});
+}
+
+class MahasiswaList {
+  static List<Mahasiswa> getMahasiswa() {
+    return [
+      Mahasiswa(
+          namamhs: 'Nurcahyo Budi Nugroho',
+          jkelamin: 'Laki-laki',
+          jurusan: 'komputer'),
+      Mahasiswa(
+        namamhs: 'mhdhamdy',
+        jkelamin: 'Lakilaki',
+        jurusan: 'sistem informasi',
+      )
+    ];
+  }
+}
+
+class Informasi extends StatefulWidget {
+  createState() => _InformasiState();
+}
+
+class _InformasiState extends State<Informasi> {
+  final List<Mahasiswa> mahasiswa = MahasiswaList.getMahasiswa();
+
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Informasi Mahasiswa'),
+      ),
+      body: Container(
+        child: mahasiswa.length > 0
+            ? ListView.builder(
+                itemCount: mahasiswa.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final mhs = mahasiswa[index];
+                  return ListTile(
+                    leading: Icon(Icons.people),
+                    title: Text(mhs.namamhs),
+                    subtitle: Text(mhs.jkelamin),
+                    trailing: Text(mhs.jurusan),
+                  );
+                })
+            : Center(child: Text('tidak ada data')),
+      ),
+    );
+  }
+}
